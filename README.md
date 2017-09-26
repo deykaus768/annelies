@@ -11,3 +11,13 @@ Code Analysis using gulp-jshint and gulp-jscs
 5. gulp-load-plugins - npm install --save-dev gulp-load-plugins (Factory pattern approach of gulp to load all the gulp-plugins)	
 	- var $ = require('gulp-load-plugins');
 	- gulp-print ($.print)
+	
+
+CSS(LESS) Preprocessor and AutoPrefixer
+========================================
+1. gulp-less 
+2. gulp-autoprefixer (Adding vendor prefixes for the css styling )
+	- { browsers : ['last 2 versions']} , autoprefixer option to show the supported browsers (uses 'CAN I USE')
+2. gulp-concat (merging all the less files into one css)
+3. gulp-plumber - to shout out any error in the less files 
+
