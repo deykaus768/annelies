@@ -20,22 +20,34 @@ gulp.task('vet', function () {
 gulp.task('styles', function () {
     log('Compiling less to css');
     var autoprefixerOptions = {
-        browsers : ['last 2 versions']
-    }
+        browsers: ['last 2 versions']
+    };
     return gulp
-            .src(config.less)
-            .pipe(plug.if(args.verbose, plug.print()))
-            .pipe(plug.less())
-            .pipe(plug.plumber())
-            .pipe(plug.concat('all.css'))
-            .pipe(plug.autoprefixer(autoprefixerOptions))
-            .pipe(gulp.dest(config.css));
+        .src(config.less)
+        .pipe(plug.if(args.verbose, plug.print()))
+        .pipe(plug.less())
+        .pipe(plug.plumber())
+        .pipe(plug.concat('all.css'))
+        .pipe(plug.autoprefixer(autoprefixerOptions))
+        .pipe(gulp.dest(config.css));
 });
 
-gulp.task('less-watch',function(){
+gulp.task('less-watch', function () {
     log('Watching less file changes');
     var less = [].concat(config.less);
-    gulp.watch(less,['styles']);    
+    gulp.watch(less, ['styles']);
+});
+
+gulp.task('wiredep', function () {
+    log('Injecting bower css and all js dependencies ');
+    var wiredep = require('wiredep').stream;
+    var options = config.getWiredepConfigOptins();
+    var appJs = gulp.src(config.appJs); // need to pass file stream into gulp-inject
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(options))
+        .pipe(plug.inject(appJs))
+        .pipe(gulp.dest(config.client));
 });
 
 function log(msg) {

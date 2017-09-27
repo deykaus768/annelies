@@ -1,16 +1,37 @@
 module.exports = function () {
     var client = './src/client/';
-    var clientAssets = client + 'assets/'
-    var gulpConfig = {
+    var clientAssets = client + 'assets/';
+    var clientApp = client + 'app/';
+    var config = {
         js: [
             './src/**/*.js',
             './*.js'
         ],
-        less : [
+        less: [
             clientAssets + 'less/*.less'
         ],
-        css : clientAssets +'/css',
-        client : client
+        appJs: [
+            clientApp + '*.module.js',
+            clientApp + '**/*.js'
+        ],
+        css: clientAssets + '/css',
+        client: client,
+        index: client + 'index.html',
+
+        bower: {
+            directory: './bower_components',
+            json: require('./bower.json'),
+            ignorePath: '../..'
+        }
     };
-    return gulpConfig;
+
+    config.getWiredepConfigOptins = function () {
+        var wiredepOptions = {
+            directory: config.bower.directory,
+            bowerJson: config.bower.json,
+            ignorePath: config.bower.ignorePath
+        };
+        return wiredepOptions;
+    };
+    return config;
 };
