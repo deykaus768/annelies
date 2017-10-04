@@ -50,6 +50,15 @@ gulp.task('wiredep', function () {
         .pipe(gulp.dest(config.client));
 });
 
+gulp.task('inject', ['wiredep', 'styles'], function () {
+    log('Injecting our css dependencies ');
+    var css = gulp.src(config.cssFiles);
+    return gulp
+        .src(config.index)
+        .pipe(plug.inject(css))
+        .pipe(gulp.dest(config.client));
+});
+
 function log(msg) {
     if (typeof (msg) === 'object') {
         for (var item in msg) {

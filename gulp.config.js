@@ -15,6 +15,9 @@ module.exports = function () {
             clientApp + '**/*.js'
         ],
         css: clientAssets + '/css',
+        cssFiles : [
+            clientAssets + '/css/*.css'
+        ],
         client: client,
         index: client + 'index.html',
 
