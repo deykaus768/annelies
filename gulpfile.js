@@ -5,6 +5,7 @@ var chalk = require('chalk');
 var plug = require('gulp-load-plugins')({ lazy: true });
 var config = require('./gulp.config')();
 var args = require('yargs').argv;
+var port = process.env.PORT || config.serverPort;
 
 gulp.task('vet', function () {
     log('Vetting all js files using jshint,jscs');
@@ -57,6 +58,19 @@ gulp.task('inject', ['wiredep', 'styles'], function () {
         .src(config.index)
         .pipe(plug.inject(css))
         .pipe(gulp.dest(config.client));
+});
+
+gulp.task('serve-dev', ['inject'], function () {
+    var isDev = true; //hardcoded as currently only dev-build
+    var nodeOptions = {
+        script: config.nodeServer, //path to app.js
+        env: {
+            'PORT': port,
+            'NODE_ENV': isDev ? 'dev' : 'build'
+        },
+        watch: [config.server]
+    }
+    return plug.nodemon(nodeOptions);
 });
 
 function log(msg) {

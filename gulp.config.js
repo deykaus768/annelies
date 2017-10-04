@@ -1,5 +1,7 @@
 module.exports = function () {
     var client = './src/client/';
+    var server = './src/server/';
+    var serverPort = '8999';
     var clientAssets = client + 'assets/';
     var clientApp = client + 'app/';
     var config = {
@@ -15,17 +17,19 @@ module.exports = function () {
             clientApp + '**/*.js'
         ],
         css: clientAssets + '/css',
-        cssFiles : [
+        cssFiles: [
             clientAssets + '/css/*.css'
         ],
         client: client,
+        server: server,
         index: client + 'index.html',
-
+        serverPort: serverPort,
         bower: {
             directory: './bower_components',
             json: require('./bower.json'),
             ignorePath: '../..'
-        }
+        },
+        nodeServer: server + 'app.js'
     };
 
     config.getWiredepConfigOptins = function () {
